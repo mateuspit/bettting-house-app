@@ -7,7 +7,7 @@ const app: Application = express();
 app
     .use(express.json())
     .get("/health", (_req, res) => res.send("OK!"))
-    .use("/participants", route.participantsRoute)
+    .use("/participants", route.participantsRouter)
 //.use("/games", route.gamesRoute)
 //.use("/bets", route.betsRoute);
 
