@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/server.js",
-    "test": "cross-env NODE_ENV=test jest --passWithNoTests --runInBand",
-    "test:coverage": "cross-env NODE_ENV=test jest --passWithNoTests --runInBand --coverage --collectCoverageFrom='./src/**'",
+    "test": "cross-env NODE_ENV=development jest --passWithNoTests --runInBand",
+    "test:coverage": "cross-env NODE_ENV=development jest --passWithNoTests --runInBand --coverage --collectCoverageFrom='./src/**'",
     "test:seed": "npm run test:load-envs prisma db seed",
     "dev:load-envs": "dotenv -e .env.development",
     "dev:seed": "npm run dev:load-envs prisma db seed",
