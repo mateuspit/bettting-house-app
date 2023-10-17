@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
@@ -28,6 +28,7 @@ model Game {
     homeTeamScore Int
     awayTeamScore Int
     isFinished    Boolean  @default(false)
+    date          DateTime
     Bet           Bet[]
 }
 
