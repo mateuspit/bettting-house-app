@@ -35,9 +35,9 @@ async function seed() {
             {
                 homeTeamName: "HOME TEAM 1",
                 awayTeamName: "AWAY TEAM 1",
+                date: new Date("2000-10-10"),
                 homeTeamScore: 7,
                 awayTeamScore: 1,
-                date: "2000-10-10",
                 isFinished: false,
             },
             {
@@ -45,7 +45,7 @@ async function seed() {
                 awayTeamName: "AWAY TEAM 2",
                 homeTeamScore: 7,
                 awayTeamScore: 2,
-                date: "2001-10-10",
+                date: new Date("2001-10-10"),
                 isFinished: false,
             },
             {
@@ -53,7 +53,7 @@ async function seed() {
                 awayTeamName: "AWAY TEAM 3",
                 homeTeamScore: 1,
                 awayTeamScore: 7,
-                date: "2002-10-10",
+                date: new Date("2002-10-10"),
                 isFinished: false,
             },
             {
@@ -61,100 +61,133 @@ async function seed() {
                 awayTeamName: "AWAY TEAM 4",
                 homeTeamScore: 2,
                 awayTeamScore: 7,
-                date: "2003-10-10",
+                date: new Date("2003-10-10"),
                 isFinished: false,
             },
         ],
     });
 
+    const firstGame = await prisma.game.findFirst({
+        where: {
+            homeTeamName: "HOME TEAM 1",
+            awayTeamName: "AWAY TEAM 1",
+            date: new Date("2000-10-10")
+        }
+    })
+
+    const secondGame = await prisma.game.findFirst({
+        where: {
+            homeTeamName: "HOME TEAM 2",
+            awayTeamName: "AWAY TEAM 2",
+            date: new Date("2001-10-10")
+        }
+    })
+
+    const thirdGame = await prisma.game.findFirst({
+        where: {
+            homeTeamName: "HOME TEAM 3",
+            awayTeamName: "AWAY TEAM 3",
+            date: new Date("2002-10-10")
+        }
+    })
+
+    const fourthGame = await prisma.game.findFirst({
+        where: {
+            homeTeamName: "HOME TEAM 4",
+            awayTeamName: "AWAY TEAM 4",
+            date: new Date("2003-10-10")
+        }
+    })
+
+    //console.log(firstGame?.id, firstUser?.id)
     await prisma.bet.createMany({
         data: [
             {
                 homeTeamScore: 2,
                 awayTeamScore: 1,
                 amountBet: 100,
-                gameId: 1,
-                userId: firstUser?.id,
+                gameId: firstGame.id,
+                userId: firstUser.id,
                 status: "PENDING",
             },
             {
                 homeTeamScore: 2,
                 awayTeamScore: 1,
                 amountBet: 200,
-                gameId: 1,
-                userId: secondUser?.id,
+                gameId: firstGame.id,
+                userId: secondUser.id,
                 status: "PENDING",
             },
             {
                 homeTeamScore: 1,
                 awayTeamScore: 4,
                 amountBet: 500,
-                gameId: 2,
-                userId: thirdUser?.id,
+                gameId: secondGame.id,
+                userId: thirdUser.id,
                 status: "PENDING",
             },
             {
                 homeTeamScore: 1,
                 awayTeamScore: 4,
                 amountBet: 100,
-                gameId: 2,
-                userId: firstUser?.id,
+                gameId: secondGame.id,
+                userId: firstUser.id,
                 status: "PENDING",
             },
             {
                 homeTeamScore: 2,
                 awayTeamScore: 0,
                 amountBet: 300,
-                gameId: 3,
-                userId: secondUser?.id,
+                gameId: thirdGame.id,
+                userId: secondUser.id,
                 status: "PENDING",
             },
             {
                 homeTeamScore: 1,
                 awayTeamScore: 0,
                 amountBet: 250,
-                gameId: 2,
-                userId: thirdUser?.id,
+                gameId: secondGame.id,
+                userId: thirdUser.id,
                 status: "PENDING",
             },
             {
                 homeTeamScore: 1,
                 awayTeamScore: 2,
                 amountBet: 300,
-                gameId: 3,
-                userId: secondUser?.id,
+                gameId: thirdGame.id,
+                userId: secondUser.id,
                 status: "PENDING",
             },
             {
                 homeTeamScore: 2,
                 awayTeamScore: 5,
                 amountBet: 400,
-                gameId: 4,
-                userId: thirdUser?.id,
+                gameId: fourthGame.id,
+                userId: thirdUser.id,
                 status: "PENDING",
             },
             {
                 homeTeamScore: 1,
                 awayTeamScore: 1,
                 amountBet: 500,
-                gameId: 4,
-                userId: firstUser?.id,
+                gameId: fourthGame.id,
+                userId: firstUser.id,
                 status: "PENDING",
             },
             {
                 homeTeamScore: 7,
                 awayTeamScore: 3,
                 amountBet: 400,
-                gameId: 4,
-                userId: firstUser?.id,
+                gameId: fourthGame.id,
+                userId: firstUser.id,
                 status: "PENDING",
             },
             {
                 homeTeamScore: 1,
                 awayTeamScore: 1,
                 amountBet: 500,
-                gameId: 4,
-                userId: thirdUser?.id,
+                gameId: fourthGame.id,
+                userId: thirdUser.id,
                 status: "PENDING",
             },
         ],
