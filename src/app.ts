@@ -9,7 +9,7 @@ app
     .get("/health", (_req, res) => res.send("OK!"))
     .use("/participants", route.participantsRouter)
     .use("/games", route.gamesRouter)
-//.use("/bets", route.betsRoute);
+    .use("/bets", route.betsRouter);
 
 export function init(): Promise<express.Application> {
     connectDb();

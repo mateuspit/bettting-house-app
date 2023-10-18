@@ -1,7 +1,7 @@
 import httpStatus from 'http-status';
 import { Participant, PostParticipant } from '../protocols';
 import { invalidDataException, noContentException } from '@/errors';
-import participantsRepository from '@/repositories/participants-repository';
+import participantsRepository from '@/repositories/participants.repositories';
 
 interface ApiResponse<Participant> {
     status: number;

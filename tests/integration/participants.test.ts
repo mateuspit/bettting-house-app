@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import cleanDb from "../helpers/cleanDB.helper";
 import app, { init } from "@/app";
-import { createParticipant } from "../factories/participants-factory"
+import { createParticipant } from "../factories/participants.factories"
 
 beforeAll(async () => {
     await init();

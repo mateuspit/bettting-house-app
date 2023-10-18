@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import gamesRepository from '@/repositories/games.repositories';
-import participantsRepository from '@/repositories/participants-repository';
+import participantsRepository from '@/repositories/participants.repositories';
 //import betsRepository from '@/repositories/bets-repository';
 import { Game, PostGame, Bet } from '../protocols';
 import { noContentException, notFoundException } from '@/errors';
