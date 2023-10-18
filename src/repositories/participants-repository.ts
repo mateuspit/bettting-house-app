@@ -1,4 +1,4 @@
-import { prisma } from "../database";
+import { prisma } from "../config";
 import { PostParticipant } from '../protocols';
 
 //async function fetchParticipants() {

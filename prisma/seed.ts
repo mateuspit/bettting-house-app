@@ -1,4 +1,5 @@
-import { prisma, connectDb } from "../src/database";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 async function cleanDb() {
     await prisma.bet.deleteMany({});
@@ -7,7 +8,6 @@ async function cleanDb() {
 }
 
 async function seed() {
-    connectDb();
     cleanDb();
 
     await prisma.user.createMany({
