@@ -4,8 +4,8 @@
   "description": "bet API application",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "start": "node dist/server.js",
+    "build": "tsc -p tsconfig.build.json && tscpaths -p tsconfig.build.json -s ./src -o ./dist",
+    "start": "node dist/app.js",
     "test": "cross-env NODE_ENV=development jest --passWithNoTests --runInBand",
     "test:coverage": "cross-env NODE_ENV=development jest --passWithNoTests --runInBand --coverage --collectCoverageFrom='./src/**'",
     "test:seed": "npm run test:load-envs prisma db seed",
@@ -30,6 +30,7 @@
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
+    "tscpaths": "^0.0.9",
     "typescript": "^5.2.2",
     "typescript-transform-paths": "^3.4.6"
   },
