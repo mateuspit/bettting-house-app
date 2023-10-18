@@ -8,7 +8,7 @@ app
     .use(express.json())
     .get("/health", (_req, res) => res.send("OK!"))
     .use("/participants", route.participantsRouter)
-//.use("/games", route.gamesRoute)
+    .use("/games", route.gamesRouter)
 //.use("/bets", route.betsRoute);
 
 export function init(): Promise<express.Application> {

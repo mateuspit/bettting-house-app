@@ -16,3 +16,25 @@ export type PostParticipant = {
     createdAt: Date;
     updatedAt: Date;
 };
+export type Game = {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    date: Date;
+    homeTeamName: string;
+    awayTeamName: string;
+    homeTeamScore: number;
+    awayTeamScore: number;
+    isFinished: boolean;
+};
+
+export type PostGame = {
+    createdAt: Date;
+    updatedAt: Date;
+    date: Date;
+    homeTeamName: string;
+    awayTeamName: string;
+    homeTeamScore: number;
+    awayTeamScore: number;
+    isFinished: boolean;
+};

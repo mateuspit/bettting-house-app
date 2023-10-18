@@ -53,10 +53,10 @@ describe("GET /participants", () => {
         );
     });
 
-    it("should respond with status 200 and return an empty array", async () => {
+    it("should respond with status 204 and return an empty array", async () => {
         await cleanDb();
         const response = await server.get(PARTICIPANTS_ROUTE);
-        expect(response.status).toBe(200);
-        expect(response.body).toEqual([]);
+        expect(response.status).toBe(204);
+        expect(response.body).toEqual({});
     });
 });

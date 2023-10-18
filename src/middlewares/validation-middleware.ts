@@ -22,3 +22,7 @@ function validate(schema: ObjectSchema, type: "body" | "params") {
 export function validateBody<T>(schema: ObjectSchema<T>): ValidationMiddleware {
     return validate(schema, "body");
 }
+
+export function validateParams<T>(schema: ObjectSchema<T>): ValidationMiddleware {
+    return validate(schema, "params");
+}
