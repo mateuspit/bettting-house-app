@@ -5,3 +5,7 @@ export const gamesSchema = Joi.object({
     awayTeamName: Joi.string().required(),
     date: Joi.date().iso().required()
 });
+
+export const gameWithIdOnParams = Joi.object({
+    id: Joi.string().regex(/^\d+$/).required(),
+});

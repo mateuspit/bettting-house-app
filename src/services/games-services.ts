@@ -4,7 +4,7 @@ import participantsRepository from '@/repositories/participants-repository';
 //import betsRepository from '@/repositories/bets-repository';
 import { Game, PostGame } from '../protocols';
 //import { noContentException, notFoundError } from '@/errors';
-import { noContentException } from '@/errors';
+import { noContentException, notFoundException } from '@/errors';
 //import roundDown from '@/utils/roundDown';
 
 // Interface para a resposta da API de jogos
@@ -41,7 +41,20 @@ async function getGames(): Promise<ApiResponse<Game>> {
     };
 }
 
+async function getGameById(id: number): Promise<ApiResponse<Game>> {
+    const game = await gamesRepository.getGameById(id);
+    if (!game) {
+        // Retorna o status 404 (Not Found) quando nenhum jogo é encontrado
+        throw notFoundException();
+    }
+    return {
+        status: httpStatus.OK,
+        data: game,
+    };
+}
+
 export const gamesService = {
     createGame,
     getGames,
+    getGameById,
 };

@@ -19,3 +19,12 @@ export async function getGames(req: Request, res: Response) {
         return res.sendStatus(httpStatus.NO_CONTENT);
     }
 }
+
+export async function getGameById(req: Request, res: Response) {
+    try {
+        const result = await gamesService.getGameById(parseInt(req.params.id, 10));
+        return res.status(result.status).send(result.data);
+    } catch (err) {
+        return res.sendStatus(httpStatus.NO_CONTENT);
+    }
+}
