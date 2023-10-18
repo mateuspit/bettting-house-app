@@ -1,3 +1,3 @@
 export * from './participants.controllers';
 export * from './games.controllers';
-//export * from './bets-controller';
+export * from './bets.controllers';

@@ -51,3 +51,15 @@ export type Bet = {
     status: string;
     amountWon: number | null;
 };
+
+export type PostBet = {
+    createdAt: Date;
+    updatedAt: Date;
+    homeTeamScore: number;
+    awayTeamScore: number;
+    amountBet: number;
+    gameId: number;
+    userId: number;
+    status: string;
+    amountWon: number | null;
+};
