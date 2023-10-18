@@ -9,3 +9,8 @@ export const gamesSchema = Joi.object({
 export const gameWithIdOnParams = Joi.object({
     id: Joi.string().regex(/^\d+$/).required(),
 });
+
+export const finishGameSchema = Joi.object({
+    homeTeamScore: Joi.number().required(),
+    awayTeamScore: Joi.number().required(),
+})

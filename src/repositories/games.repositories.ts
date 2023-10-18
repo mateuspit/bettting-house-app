@@ -20,10 +20,25 @@ async function getGameById(id: number) {
     });
 }
 
+async function finishGame(id: number, homeTeamScore: number, awayTeamScore: number) {
+    return prisma.game.update({
+        where: {
+            id,
+        },
+        data: {
+            homeTeamScore,
+            awayTeamScore,
+            isFinished: true,
+            updatedAt: new Date(),
+        },
+    });
+}
+
 const gamesRepository = {
     createGame,
     fetchGames,
     getGameById,
+    finishGame
 };
 
 export default gamesRepository;

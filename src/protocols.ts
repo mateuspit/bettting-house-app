@@ -38,3 +38,16 @@ export type PostGame = {
     awayTeamScore: number;
     isFinished: boolean;
 };
+
+export type Bet = {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    homeTeamScore: number;
+    awayTeamScore: number;
+    amountBet: number;
+    gameId: number;
+    userId: number;
+    status: string;
+    amountWon: number | null;
+};

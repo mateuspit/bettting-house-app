@@ -2,12 +2,11 @@ import httpStatus from 'http-status';
 import gamesRepository from '@/repositories/games.repositories';
 import participantsRepository from '@/repositories/participants-repository';
 //import betsRepository from '@/repositories/bets-repository';
-import { Game, PostGame } from '../protocols';
-//import { noContentException, notFoundError } from '@/errors';
+import { Game, PostGame, Bet } from '../protocols';
 import { noContentException, notFoundException } from '@/errors';
-//import roundDown from '@/utils/roundDown';
+import roundToDown from '@/utils/roundToDown.function';
 
-// Interface para a resposta da API de jogos
+
 interface ApiResponse<Game> {
     status: number;
     data: Game[] | Game | null;
@@ -44,7 +43,7 @@ async function getGames(): Promise<ApiResponse<Game>> {
 async function getGameById(id: number): Promise<ApiResponse<Game>> {
     const game = await gamesRepository.getGameById(id);
     if (!game) {
-        // Retorna o status 404 (Not Found) quando nenhum jogo é encontrado
+
         throw notFoundException();
     }
     return {
@@ -53,8 +52,45 @@ async function getGameById(id: number): Promise<ApiResponse<Game>> {
     };
 }
 
+async function finishGame(gameId: number, score: { homeTeamScore: number; awayTeamScore: number }): Promise<Game> {
+
+    const existingGame = await gamesRepository.getGameById(gameId);
+
+    if (!existingGame || existingGame.isFinished) {
+        throw notFoundException()
+    }
+
+    const updatedGame = await gamesRepository.finishGame(gameId, score.homeTeamScore, score.awayTeamScore);
+
+    const totalWinningAmount = existingGame.Bet.reduce((total: number, bet: Bet) => total + bet.amountBet, 0);
+    const houseEdge = 0.3;
+    const totalAmountWon = totalWinningAmount * (1 - houseEdge);
+
+    for (const bet of existingGame.Bet) {
+        const participant = await participantsRepository.getParticipantById(bet.userId);
+
+        if (bet.status === 'PENDING') {
+            if (bet.homeTeamScore === score.homeTeamScore && bet.awayTeamScore === score.awayTeamScore) {
+                const betAmount = bet.amountBet;
+                const betWinningAmount = roundToDown((betAmount / totalWinningAmount) * totalAmountWon);
+                //await betsRepository.modifyBet(bet.id, 'WON', betWinningAmount);
+
+                if (participant) {
+                    const newBalance = participant.balance + betWinningAmount;
+                    await participantsRepository.newParticipantBalance(participant.id, newBalance);
+                } else {
+                    //await betsRepository.modifyBet(bet.id, 'LOST', 0);
+                }
+            }
+        }
+    }
+
+    return updatedGame;
+}
+
 export const gamesService = {
     createGame,
     getGames,
     getGameById,
+    finishGame,
 };
