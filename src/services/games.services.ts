@@ -1,7 +1,7 @@
 import httpStatus from 'http-status';
 import gamesRepository from '@/repositories/games.repositories';
 import participantsRepository from '@/repositories/participants.repositories';
-//import betsRepository from '@/repositories/bets-repository';
+import betsRepository from '@/repositories/bets.repositories';
 import { Game, PostGame, Bet } from '../protocols';
 import { noContentException, notFoundException } from '@/errors';
 import roundToDown from '@/utils/roundToDown.function';
@@ -73,13 +73,13 @@ async function finishGame(gameId: number, score: { homeTeamScore: number; awayTe
             if (bet.homeTeamScore === score.homeTeamScore && bet.awayTeamScore === score.awayTeamScore) {
                 const betAmount = bet.amountBet;
                 const betWinningAmount = roundToDown((betAmount / totalWinningAmount) * totalAmountWon);
-                //await betsRepository.modifyBet(bet.id, 'WON', betWinningAmount);
+                await betsRepository.modifyBet(bet.id, 'WON', betWinningAmount);
 
                 if (participant) {
                     const newBalance = participant.balance + betWinningAmount;
                     await participantsRepository.newParticipantBalance(participant.id, newBalance);
                 } else {
-                    //await betsRepository.modifyBet(bet.id, 'LOST', 0);
+                    await betsRepository.modifyBet(bet.id, 'LOST', 0);
                 }
             }
         }
