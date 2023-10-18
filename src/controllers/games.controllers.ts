@@ -10,3 +10,12 @@ export async function createGame(req: Request, res: Response) {
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+
+export async function getGames(req: Request, res: Response) {
+    try {
+        const result = await gamesService.getGames();
+        return res.status(result.status).send(result.data);
+    } catch (err) {
+        return res.sendStatus(httpStatus.NO_CONTENT);
+    }
+}

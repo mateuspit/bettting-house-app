@@ -3,8 +3,15 @@ import gamesRepository from '@/repositories/games.repositories';
 import participantsRepository from '@/repositories/participants-repository';
 //import betsRepository from '@/repositories/bets-repository';
 import { Game, PostGame } from '../protocols';
-//import { noContentError, notFoundError } from '@/errors';
+//import { noContentException, notFoundError } from '@/errors';
+import { noContentException } from '@/errors';
 //import roundDown from '@/utils/roundDown';
+
+// Interface para a resposta da API de jogos
+interface ApiResponse<Game> {
+    status: number;
+    data: Game[] | Game | null;
+}
 
 
 async function createGame(
@@ -23,6 +30,18 @@ async function createGame(
     return game;
 }
 
+async function getGames(): Promise<ApiResponse<Game>> {
+    const games = await gamesRepository.fetchGames();
+    if (!games || !games.length) {
+        throw noContentException("No have games posted.")
+    }
+    return {
+        status: httpStatus.OK,
+        data: games,
+    };
+}
+
 export const gamesService = {
     createGame,
+    getGames,
 };
