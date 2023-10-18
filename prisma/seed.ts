@@ -99,7 +99,7 @@ async function seed() {
         }
     })
 
-    //console.log(firstGame?.id, firstUser?.id)
+
     await prisma.bet.createMany({
         data: [
             {

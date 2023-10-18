@@ -174,7 +174,6 @@ describe("POST /games/:id/finish", () => {
         await server.post(GAMES_ROUTE).send({ homeTeamName, awayTeamName, date: gameDay });
         const getGame = await server.get(GAMES_ROUTE);
         await server.post(`${GAMES_ROUTE}/${getGame.body[0].id}/finish`).send({ homeTeamScore: 1, awayTeamScore: 2 });
-        console.log("getGame.body[0].id", getGame.body[0].id);
         const response = await server
             .post(`${GAMES_ROUTE}/${getGame.body[0].id}/finish`)
             .send({ homeTeamScore: 1, awayTeamScore: 2 });

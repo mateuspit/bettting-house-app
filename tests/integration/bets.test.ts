@@ -73,7 +73,6 @@ describe("POST /bets", () => {
         };
 
         const response = await server.post(BETS_ROUTE).send(body);
-        console.log(response.text);
         expect(response.status).toBe(201);
     });
 
