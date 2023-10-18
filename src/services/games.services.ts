@@ -3,7 +3,7 @@ import gamesRepository from '@/repositories/games.repositories';
 import participantsRepository from '@/repositories/participants.repositories';
 import betsRepository from '@/repositories/bets.repositories';
 import { Game, PostGame, Bet } from '../protocols';
-import { noContentException, notFoundException } from '@/errors';
+import { noContentException, notFoundException, alreadyCreatedException, invalidDataException } from '@/errors';
 import roundToDown from '@/utils/roundToDown.function';
 
 
@@ -16,6 +16,12 @@ interface ApiResponse<Game> {
 async function createGame(
     gameData: Omit<PostGame, 'createdAt' | 'updatedAt' | 'homeTeamScore' | 'awayTeamScore' | 'isFinished'>,
 ): Promise<Game> {
+
+    if (gameData.homeTeamName === gameData.awayTeamName) throw invalidDataException(["Same teams"]);
+
+    const registredGame = await gamesRepository.getGameByHomeTeamAndAwayTeam(gameData);
+    if (registredGame) throw alreadyCreatedException("Game already created");
+
     const now = new Date();
     const game = await gamesRepository.createGame({
         ...gameData,

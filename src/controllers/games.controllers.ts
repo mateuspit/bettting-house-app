@@ -7,6 +7,8 @@ export async function createGame(req: Request, res: Response) {
         const result = await gamesService.createGame(req.body);
         return res.status(httpStatus.CREATED).send(result);
     } catch (err) {
+        if (err.message === "Game already created") return res.sendStatus(httpStatus.CONFLICT);
+        if (err.message === "Invalid data") return res.sendStatus(httpStatus.NOT_ACCEPTABLE);
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
 }
