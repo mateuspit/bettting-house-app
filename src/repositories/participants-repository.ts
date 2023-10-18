@@ -1,9 +1,9 @@
 import { prisma } from "../config";
 import { PostParticipant } from '../protocols';
 
-//async function fetchParticipants() {
-//    return prisma.participant.findMany();
-//}
+async function fetchParticipants() {
+    return prisma.user.findMany();
+}
 
 async function createParticipant(participantData: PostParticipant) {
     return prisma.user.create({ data: participantData });
@@ -30,7 +30,7 @@ async function createParticipant(participantData: PostParticipant) {
 //}
 
 const participantsRepository = {
-    //fetchParticipants,
+    fetchParticipants,
     createParticipant,
     //retrieveParticipantById,
     //modifyParticipant,
